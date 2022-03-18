@@ -1,5 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
@@ -16,18 +17,27 @@ module.exports = {
     },
     devServer: {
         watchFiles: path.resolve(__dirname, 'public'),
+        hot: true,
     },
     plugins: [
+        isDevelopment && new ReactRefreshWebpackPlugin(),
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, 'public', 'index.html')
         })
-    ],
+    ].filter(Boolean), // uso esse filtro pra ele filtrar tudo que for diferente de nulo
     module: { //ficam as configurações de como a aplicação vai se comportar quando estiver importando cada um dos arquivos implementados;
         rules: [
             {
                 test: /\.jsx$/,
                 exclude: /node_modules/,
-                use: 'babel-loader',
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        plugins: [
+                            isDevelopment && require.resolve('react-refresh/babel')
+                        ]
+                    }
+                }
             },
             {
                 test: /\.scss$/,
