@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     mode: 'development',
+    devtool: 'eval-source-map', //para tirar informações desnecessárias do console;
     entry: path.resolve(__dirname, 'src', 'index.jsx'), // entry quer saber o arquivo principal da aplicação;
     output: {
         path: path.resolve(__dirname, 'dist'),
