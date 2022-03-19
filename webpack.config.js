@@ -7,13 +7,13 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 module.exports = {
     mode: isDevelopment ? 'development' : 'production',
     devtool: isDevelopment ? 'eval-source-map' : 'source-map', //para tirar informações desnecessárias do console;
-    entry: path.resolve(__dirname, 'src', 'index.jsx'), // entry quer saber o arquivo principal da aplicação;
+    entry: path.resolve(__dirname, 'src', 'index.tsx'), // entry quer saber o arquivo principal da aplicação;
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
     },
     resolve: {
-        extensions: ['.js', '.jsx'] //fala quais arquivos ele pode ler;
+        extensions: ['.js', '.jsx', '.ts', '.tsx'] //fala quais arquivos ele pode ler;
     },
     devServer: {
         watchFiles: path.resolve(__dirname, 'public'),
@@ -28,7 +28,7 @@ module.exports = {
     module: { //ficam as configurações de como a aplicação vai se comportar quando estiver importando cada um dos arquivos implementados;
         rules: [
             {
-                test: /\.jsx$/,
+                test: /\.(j|t)sx$/,
                 exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader',
